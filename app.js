@@ -29,11 +29,36 @@ app.get("/productos", (req, res) => {
     `);
 });
 
+app.get("/productos/:nombre", (req, res)=>{
+    const producto = req.params.nombre
+    const id_producto = req.params.id_producto
+    const precio_producto = req.params.precio_producto
+    res.send ( `<h1> Informacion del producto </h1>
+        <ol>
+        <li> Producto: ${producto} <li>
+        <li> Id: ${id_producto} </li>
+        <li> Precio: ${precio_producto} </li>
+        </ol> ` )
+})
+
+app.get("/Saludo/:name", (req, res)=>{
+    const name = req.params.name
+   res.send(`Hola ${name}`)
+});
+
+app.get("/categoria/:categoria/:id", (req, res)=>{
+    const categoria_producto = req.params.categoria
+    const id_categoria = req.params.id
+    res.send(`<h1> Categoria del Producto </h1>
+        <ol>
+        <li> categortia: ${categoria_producto} </li>
+        <li> Id: ${id_categoria} </li>
+        </ol>`)
+
+})
 app.listen(port, () => {
     console.log(`Servidor en funcionamiento en el puerto: ${port}`);
 });
 /*
 http://localhost:3000
 */
-
-

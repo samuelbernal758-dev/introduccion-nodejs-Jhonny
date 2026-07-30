@@ -29,13 +29,13 @@ app.get("/productos", (req, res) => {
     `);
 });
 
-app.get("/productos/:nombre", (req, res)=>{
+app.get("/productos/:nombre/:id/:precio", (req, res)=>{
     const producto = req.params.nombre
-    const id_producto = req.params.id_producto
-    const precio_producto = req.params.precio_producto
+    const id_producto = req.params.id
+    const precio_producto = req.params.precio
     res.send ( `<h1> Informacion del producto </h1>
         <ol>
-        <li> Producto: ${producto} <li>
+        <li> Producto: ${producto}</li>
         <li> Id: ${id_producto} </li>
         <li> Precio: ${precio_producto} </li>
         </ol> ` )

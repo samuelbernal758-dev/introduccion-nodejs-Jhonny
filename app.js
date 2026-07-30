@@ -1,18 +1,37 @@
 import express from 'express';
+import dotenv from 'dotenv';
+
+// Const bodyParser = require(`body-Parser`);//importacion commonjs
+import bodyParser from "body-Parser";//Importacion ES "module"
+dotenv.config();
 
 const app = express();
-const port = 3030;
+const port = process.env.PORT || 3030; // Cambiado a 3030 por tu requerimiento previo
 
-export const Saludo = "Hola, estamops aprendiendo exress con la ficha 3407184"
+// Middlewares para procesar datos JSON y formularios
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (__,res)=>{
-    res.send (Saludo);
+export const Saludo = "Hola, estamos aprendiendo express con la ficha 3407184";
+
+app.get("/", (req, res) => {
+    res.send(Saludo);
 });
 
-app.listen(port, ()=>{
-    console.log(`Servidor en funcionamiento en el puerto : ${port}`);
+app.get("/productos", (req, res) => {
+    res.send(`
+        <h1>Listado de Productos</h1>
+        <ul>
+            <li>Televisor</li>
+            <li>Celular</li>
+            <li>Impresora</li>
+        </ul>
+    `);
 });
 
+app.listen(port, () => {
+    console.log(`Servidor en funcionamiento en el puerto: ${port}`);
+});
 /*
 http://localhost:3000
 */

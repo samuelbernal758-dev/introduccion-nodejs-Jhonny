@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors'
 
 // Const bodyParser = require(`body-Parser`);//importacion commonjs
 import bodyParser from "body-Parser";//Importacion ES "module"
@@ -9,6 +10,7 @@ const app = express();
 const port = process.env.PORT || 3030; // Cambiado a 3030 por tu requerimiento previo
 
 // Middlewares para procesar datos JSON y formularios
+app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
@@ -19,8 +21,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/productos", (req, res) => {
-    res.send(`
-        <h1>Listado de Productos</h1>
+    const orden = req.query.orden || "Sin orden"
+    const pagina = req.query.pagina || "Sin pagina"
+    res.send(` <h1> Listado de Productos en orden ${orden} en la pagina ${pagina} </h1>
         <ul>
             <li>Televisor</li>
             <li>Celular</li>
@@ -43,7 +46,7 @@ app.get("/productos/:nombre/:id/:precio", (req, res)=>{
 
 app.get("/Saludo/:name", (req, res)=>{
     const name = req.params.name
-   res.send(`Hola ${name}`)
+   res.send(`Hola ${name} Bienvenido`)
 });
 
 app.get("/categoria/:categoria/:id", (req, res)=>{
@@ -54,11 +57,16 @@ app.get("/categoria/:categoria/:id", (req, res)=>{
         <li> categortia: ${categoria_producto} </li>
         <li> Id: ${id_categoria} </li>
         </ol>`)
+});
 
-})
+app.get("/articulo", (req, res) =>{
+    res.json({"nombre": "Samuel", "Apellido" : "Bernal"})
+});
+
+
 app.listen(port, () => {
     console.log(`Servidor en funcionamiento en el puerto: ${port}`);
 });
 /*
-http://localhost:3000
+http://localhost:3030
 */

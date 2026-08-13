@@ -8,7 +8,7 @@ app.get("/", (__,res)=>{
 
 app.get("/aprendices", (req, res) => {
     res.json([{
-        "nombre": "Juan Camilo",
+        "nombre": "Juan Camila",
         "Edad":  "17",
         "Correo": "juan@gmail.com",
         "imgPerfil": "url"

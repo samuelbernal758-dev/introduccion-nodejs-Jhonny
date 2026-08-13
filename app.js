@@ -2,11 +2,13 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+app.use (express.json());
+
 app.get("/", (__,res)=>{
     res.send ("API de Aprendices, EndPoint Principal");
 });
 
-const ListaAprendices = [{
+const listaaprendices = [{
         "nombre": "Juan",
         "Edad":  "17",
         "Correo": "juan@gmail.com",
@@ -36,10 +38,22 @@ app.get('/aprendices/:nombre', (req, res) => {
     res.json(aprendizencontrado);
     
 });
-app.post("/aprendices", (req, res) =>{ 
-    const datosAprendiz = req.body
-    res.json({"Mensaje": "Aprendiz creado", "Datos": datosAprendiz})
-})
+app.post('/aprendicescreado', (req, res) => {
+    const { nombre, edad, correo, imgperfil } = req.body;
+    
+    if (typeof nombre !== 'string' || nombre.trim().length < 3) {
+        return res.status(400).json({ "error": "El nombre como mínimo necesita 3 letras" });
+    }
+    
+    if (typeof correo !== 'string' || !correo.includes('@')) {
+        return res.status(400).json({ "error": "El correo necesita @" });
+    }
+    
+    const datosAprendiz = { nombre, edad, correo, imgperfil };
+    listaaprendices.push(datosAprendiz);
+    
+    return res.status(201).json({ "mensaje": "Aprendiz creado", "Datos": datosAprendiz });
+});
 
 app.listen(port, ()=>{
     console.log(`Servidor: http://localhost:${port} `);
